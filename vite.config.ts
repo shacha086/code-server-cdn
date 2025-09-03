@@ -8,7 +8,7 @@ import fs from "fs-extra";
 const codeServerOut = path.resolve("node_modules/code-server/lib/vscode/out/vs");
 const publicVs = path.resolve(`public/stable-${COMMIT_HASH}/static/out/vs`);
 fs.removeSync(publicVs);
-fs.copySync(codeServerOut, publicVs);
+fs.copySync(codeServerOut, publicVs, {filter: (src) => !src.endsWith(".js.map")});
 export default defineConfig({
   base: `/${COMMIT_HASH}/out/`,
   plugins: [],
@@ -23,7 +23,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: path.resolve(__dirname, 'index.html'),
-      }
+      },
     }
   },
 })
