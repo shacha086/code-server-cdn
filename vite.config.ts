@@ -5,10 +5,10 @@ import {COMMIT_HASH} from "./getCommitHash";
 import path from "path";
 import fs from "fs-extra";
 
-const codeServerOut = path.resolve("node_modules/code-server/lib/vscode/out/vs");
-const publicVs = path.resolve(`public/stable-${COMMIT_HASH}/static/out/vs`);
+const codeServerOut = path.resolve("node_modules/code-server/lib/vscode/out");
+const publicVs = path.resolve(`public/stable-${COMMIT_HASH}/static/out`);
 fs.removeSync(publicVs);
-fs.copySync(codeServerOut, publicVs, {filter: (src) => !src.endsWith(".js.map")});
+fs.copySync(codeServerOut, publicVs, {filter: (src) => !src.endsWith(".js.map") && !src.endsWith(".css.map")});
 export default defineConfig({
   base: `/${COMMIT_HASH}/out/`,
   plugins: [],
